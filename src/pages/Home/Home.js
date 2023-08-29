@@ -5,7 +5,7 @@ import moment from 'moment'
 import {Table} from 'antd'
 
 import {OrderWindow} from "./OrderWindow/OrderWindow"
-// import {ClientWindow} from "./ClientWindow/ClientWindow"
+import {ClientWindow} from "./ClientWindow/ClientWindow"
 
 import {Status} from "../../components/Status/Status"
 import FileAddOutlined from "@ant-design/icons/lib/icons/FileAddOutlined"
@@ -26,6 +26,8 @@ export const managers = [
         name: 'Ромка'
     },
 ]
+
+export const idGenerator = () => String(new Date().valueOf())
 
 export const Home = () => {
     const [orders, setOrders] = useState(localStorage.getItem('localOrders') ? JSON.parse(localStorage.getItem('localOrders')) : []),
@@ -161,13 +163,12 @@ export const Home = () => {
             }}
         />
 
-        {/*<ClientWindow*/}
-        {/*    visible={visibleClientWindow}*/}
+        <ClientWindow
+            visible={visibleClientWindow}
 
-        {/*    onSave={saveClientHandler}*/}
-        {/*    onClose={() => setVisibleClientWindow(false)}*/}
-        {/*/>*/}
+            onSave={saveClientHandler}
+            onClose={() => setVisibleClientWindow(false)}
+        />
     </div>)
 }
 
-export const idGenerator = () => String(new Date().valueOf())

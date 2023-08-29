@@ -6,18 +6,18 @@
   flex-direction: column;
 }
 .order-modal-window .ant-modal .modal-header {
-  padding: 0 20px 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #1D1E20;
+  border-bottom: 2px solid #121212;
+  padding: 0 0 10px;
 }
 .order-modal-window .ant-modal .modal-header h1 {
   margin: 0 auto 0 0;
   color: #fff;
 }
 .order-modal-window .ant-modal .modal-footer {
-  border-top: 2px solid #1D1E20;
+  border-top: 2px solid #121212;
   padding: 15px 0 0 0;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
   grid-gap: 20px;
 }
 .order-modal-window .ant-modal .work-section {
-  padding: 30px;
+  padding: 20px 0;
   overflow: auto;
 }
 .order-modal-window .ant-modal .work-section > .row {
@@ -58,9 +58,9 @@
 }
 .order-modal-window .ant-modal .work-section section .section-header {
   color: #fff;
-  border-bottom: 1px solid #1D1E20;
-  padding: 0 0 20px;
-  margin: 0 0 30px;
+  border-bottom: 1px solid #121212;
+  padding: 0 0 10px;
+  margin: 0 0 20px;
 }
 .order-modal-window .ant-modal .work-section section .works-list {
   display: flex;
@@ -68,24 +68,21 @@
 }
 .order-modal-window .ant-modal .work-section section .works-list .row {
   display: flex;
-  border-bottom: 1px solid #1D1E20;
+  border-bottom: 1px solid #121212;
 }
 .order-modal-window .ant-modal .work-section section .works-list .row .th {
   flex: 1;
-  border-right: 1px solid #1D1E20;
+  border-right: 1px solid #121212;
 }
 .order-modal-window .ant-modal .work-section section .works-list .row .th:last-of-type {
   border: 0;
 }
-.order-modal-window .ant-modal .work-section section .works-list .row .th div {
-  width: 100%;
-}
 .order-modal-window .ant-modal .work-section section .works-list .row .th input,
-.order-modal-window .ant-modal .work-section section .works-list .row .th .MuiSelect-select {
-  padding: 5px 10px;
-}
-.order-modal-window .ant-modal .work-section section .works-list .row .th fieldset {
-  display: none;
+.order-modal-window .ant-modal .work-section section .works-list .row .th .ant-select-selector {
+  background: none;
+  outline: none !important;
+  border: 0 !important;
+  box-shadow: none;
 }
 .order-modal-window .ant-modal .work-section section .works-list .row .index {
   min-height: 100%;

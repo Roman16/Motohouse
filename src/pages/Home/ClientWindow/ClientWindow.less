@@ -1,22 +1,16 @@
 .client-modal-window {
-  width: 60vw;
-  max-width: 700px;
-  height: 60vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(53, 54, 59, 0.95);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+  .ant-modal {
+    width: 60vw;
+    max-width: 700px;
+    height: 60vh;
+  }
 
   .modal-header {
-    padding: 10px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #1D1E20;
+    border-bottom: 2px solid #121212;
+    padding: 0 0 10px;
 
     h1 {
       margin: 0 auto 0 0;
@@ -25,8 +19,8 @@
   }
 
   .modal-footer {
-    border-top: 1px solid #1D1E20;
-    padding: 15px 30px;
+    border-top: 2px solid #121212;
+    padding: 15px 0 0 0;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -34,8 +28,7 @@
   }
 
   .work-section {
-    padding: 30px;
-    overflow: auto;
+    padding: 20px 0;
 
     & > .row {
       display: flex;
@@ -54,12 +47,15 @@
 
     .section-header {
       color: #fff;
-      border-bottom: 1px solid #1D1E20;
-      padding: 0 0 10px;
-      margin: 0 0 30px;
+      border-bottom: 1px solid #121212;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin: 0 0 20px;
+
+      .btn {
+        font-size: 20px;
+      }
     }
 
     .motorcycles-list {
@@ -68,11 +64,11 @@
 
       .row {
         display: flex;
-        border-bottom: 1px solid #1D1E20;
+        border-bottom: 1px solid #121212;
 
         .th {
           flex: 1;
-          border-right: 1px solid #1D1E20;
+          border-right: 1px solid #121212;
 
           &:last-of-type {
             border: 0;
@@ -87,12 +83,9 @@
             border: 0;
             padding: 5px 10px;
             outline: none !important;
+            box-shadow: none !important;
             color: #fff;
             font-size: 16px;
-          }
-
-          fieldset {
-            display: none;
           }
         }
 

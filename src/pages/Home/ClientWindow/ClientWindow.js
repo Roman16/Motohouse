@@ -1,24 +1,9 @@
 import React, {useEffect, useState} from "react"
-import Modal from '@mui/material/Modal'
-import CloseIcon from '@mui/icons-material/Close'
-import Button from '@mui/material/Button'
 import './ClientWindow.css'
-import TextField from "@mui/material/TextField/TextField"
-import AddIcon from '@mui/icons-material/Add'
-
-const newMot = {
-    id: new Date().valueOf(),
-    motoModel: undefined,
-    motoNumber: undefined,
-    motoVin: undefined,
-}
-
-const newClient = {
-    id: new Date().valueOf(),
-    clientName: undefined,
-    clientPhone: undefined,
-    motorcycles: [{...newMot}]
-}
+import {Modal, Button} from 'antd'
+import {Input} from 'antd'
+import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined"
+import {idGenerator} from "../Home"
 
 
 export const ClientWindow = ({
@@ -27,6 +12,20 @@ export const ClientWindow = ({
                                  onClose,
                                  onSave
                              }) => {
+    const newMot = {
+        id: idGenerator(),
+        motoModel: undefined,
+        motoNumber: undefined,
+        motoVin: undefined,
+    }
+
+    const newClient = {
+        id: idGenerator(),
+        clientName: undefined,
+        clientPhone: undefined,
+        motorcycles: [{...newMot, id: idGenerator()}]
+    }
+
     const [client, setClient] = useState({...newClient})
 
     const changeClientHandler = (data) => {
@@ -41,104 +40,99 @@ export const ClientWindow = ({
     const addMotHandler = () => changeClientHandler({
         motorcycles: [...client.motorcycles, {
             ...newMot,
-            id: new Date().valueOf()
+            id: idGenerator()
         },]
     })
 
     useEffect(() => {
         if (!visible) {
-            setClient({...newClient, id: new Date().valueOf()})
+            setClient({...newClient, id: idGenerator()})
         }
     }, [visible])
 
     return (
         <Modal
             open={visible}
-            onClose={onClose}
+            onCancel={onClose}
+            footer={false}
+            wrapClassName={'client-modal-window'}
         >
-            <div className="client-modal-window">
-                <div className="modal-header">
-                    <h1>Клієнт</h1>
+            <div className="modal-header">
+                <h1>Клієнт</h1>
+            </div>
 
-                    <button className={'close-btn icon'} onClick={onClose}>
-                        <CloseIcon/>
-                    </button>
+            <div className="work-section">
+                <div className="row">
+                    <Input
+                        value={client.clientName}
+                        placeholder={"Ім'я"}
+                        onChange={(e) => changeClientHandler({clientName: e.target.value})}
+                    />
+
+                    <Input
+                        value={client.clientPhone}
+                        placeholder={"Телефон"}
+                        onChange={(e) => changeClientHandler({clientPhone: e.target.value})}
+                    />
                 </div>
 
-                <div className="work-section">
-                    <div className="row">
-                        <TextField
-                            value={client.clientName}
-                            label={"Ім'я"}
-                            onChange={(e) => changeClientHandler({clientName: e.target.value})}
-                        />
+                <section className="motorcycles">
+                    <h2 className={'section-header'}>
+                        Мотоцикли
 
-                        <TextField
-                            value={client.clientPhone}
-                            label={"Телефон"}
-                            onChange={(e) => changeClientHandler({clientPhone: e.target.value})}
-                        />
+                        <button className="btn icon" onClick={addMotHandler}>
+                            <PlusOutlined/>
+                        </button>
+                    </h2>
+
+                    <div className="motorcycles-list">
+                        {client.motorcycles.map((motorcycle, index) => <div className="row">
+                            <div className="th index">
+                                {index + 1}
+                            </div>
+
+                            <div className="th">
+                                <Input
+                                    value={motorcycle.motoModel}
+                                    placeholder={"Модель"}
+                                    onChange={(e) => changeMotorcyclesHandler(index, {
+                                        ...motorcycle,
+                                        motoModel: e.target.value
+                                    })}
+                                />
+                            </div>
+
+                            <div className="th">
+                                <Input
+                                    value={motorcycle.motoNumber}
+                                    placeholder={"Номер"}
+                                    onChange={(e) => changeMotorcyclesHandler(index, {
+                                        ...motorcycle,
+                                        motoNumber: e.target.value
+                                    })}
+                                />
+                            </div>
+
+                            <div className="th">
+                                <Input
+                                    value={motorcycle.motoVin}
+                                    placeholder={"VIN"}
+                                    onChange={(e) => changeMotorcyclesHandler(index, {
+                                        ...motorcycle,
+                                        motoVin: e.target.value
+                                    })}
+                                />
+                            </div>
+                        </div>)}
                     </div>
+                </section>
+            </div>
 
-                    <section className="motorcycles">
-                        <h2 className={'section-header'}>
-                            Мотоцикли
-
-                            <button className="btn icon" onClick={addMotHandler}>
-                                <AddIcon/>
-                            </button>
-                        </h2>
-
-                        <div className="motorcycles-list">
-                            {client.motorcycles.map((motorcycle, index) => <div className="row">
-                                <div className="th index">
-                                    {index + 1}
-                                </div>
-
-                                <div className="th">
-                                    <input
-                                        value={motorcycle.motoModel}
-                                        placeholder={"Модель"}
-                                        onChange={(e) => changeMotorcyclesHandler(index, {
-                                            ...motorcycle,
-                                            motoModel: e.target.value
-                                        })}
-                                    />
-                                </div>
-
-                                <div className="th">
-                                    <input
-                                        value={motorcycle.motoNumber}
-                                        placeholder={"Номер"}
-                                        onChange={(e) => changeMotorcyclesHandler(index, {
-                                            ...motorcycle,
-                                            motoNumber: e.target.value
-                                        })}
-                                    />
-                                </div>
-
-                                <div className="th">
-                                    <input
-                                        value={motorcycle.motoVin}
-                                        placeholder={"VIN"}
-                                        onChange={(e) => changeMotorcyclesHandler(index, {
-                                            ...motorcycle,
-                                            motoVin: e.target.value
-                                        })}
-                                    />
-                                </div>
-                            </div>)}
-                        </div>
-                    </section>
-                </div>
-
-                <div className="modal-footer">
-                    <Button variant="outlined" onClick={() => onSave(client)}>Зберегти</Button>
-                </div>
+            <div className="modal-footer">
+                <Button variant="outlined" onClick={() => onSave(client)}>Зберегти</Button>
             </div>
         </Modal>
     )
 }
-
 
 

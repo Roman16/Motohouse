@@ -9,6 +9,18 @@ import UserAddOutlined from "@ant-design/icons/lib/icons/UserAddOutlined"
 
 const Option = Select.Option
 
+
+const newWork = {
+    name: undefined,
+    price: undefined,
+    mechanic: '1'
+}
+const newMaterial = {
+    name: undefined,
+    price: undefined,
+    mechanic: '3'
+}
+
 const newOrder = {
     client: {
         clientName: undefined,
@@ -24,20 +36,11 @@ const newOrder = {
     mileage: undefined,
     manager: '1',
     status: 'progress',
-    works: [],
-    materials: []
+    works: [{...newWork}],
+    materials: [{...newMaterial}]
 }
 
-const newWork = {
-    name: undefined,
-    price: undefined,
-    mechanic: '1'
-}
-const newMaterial = {
-    name: undefined,
-    price: undefined,
-    mechanic: '3'
-}
+
 
 export const OrderWindow = ({
                                 visible,
@@ -88,6 +91,9 @@ export const OrderWindow = ({
         }
     }, [visible])
 
+
+    console.log(order)
+
     return (
         <Modal
             open={visible}
@@ -123,7 +129,7 @@ export const OrderWindow = ({
                             placeholder="Мотоцикл"
                             disabled={!order.client.id}
                             value={order.motorcycle?.id || undefined}
-                            onChange={(motorcycle) => changeOrderHandler({motorcycle})}
+                            onChange={(id) => changeOrderHandler({motorcycle: order.client.motorcycles.find((i) => i.id === id)})}
                         >
                             {order.client.motorcycles.map(mot => <Option key={mot.id}>
                                 {mot.motoModel} ({mot.motoNumber})
@@ -159,21 +165,21 @@ export const OrderWindow = ({
                     <div className="works-list">
                         {order.works.map((work, index) => (<div className="row" key={work.id}>
                             <div className="th index">{index + 1}</div>
-                            <div className="th name">
+                            <div className="th name form-control">
                                 <Input
                                     value={work.name}
                                     onChange={(e) => changeWorksHandler({...work, name: e.target.value})}
                                 />
                             </div>
 
-                            <div className="th price">
+                            <div className="th price form-control">
                                 <Input
                                     value={work.price}
                                     onChange={(e) => changeWorksHandler({...work, price: e.target.value})}
                                 />
                             </div>
 
-                            <div className="th mechanic">
+                            <div className="th mechanic form-control">
                                 <Select
                                     value={work.mechanic}
                                     onChange={(mechanic) => changeWorksHandler({...work, mechanic})}
@@ -202,21 +208,21 @@ export const OrderWindow = ({
                     <div className="works-list">
                         {order.materials.map((material, index) => (<div className="row">
                             <div className="th index">{index + 1}</div>
-                            <div className="th name">
+                            <div className="th name form-control">
                                 <Input
                                     value={material.name}
                                     onChange={(e) => changeMaterialsHandler({...material, name: e.target.value})}
                                 />
                             </div>
 
-                            <div className="th price">
+                            <div className="th price form-control">
                                 <Input
                                     value={material.price}
                                     onChange={(e) => changeMaterialsHandler({...material, price: e.target.value})}
                                 />
                             </div>
 
-                            <div className="th mechanic">
+                            <div className="th mechanic form-control">
                                 <Select
                                     value={material.mechanic}
                                     onChange={(mechanic) => changeWorksHandler({...material, mechanic})}
@@ -240,7 +246,7 @@ export const OrderWindow = ({
             </div>
 
             <div className="modal-footer">
-                <Button onClick={() => onSave(order)}>Друкувати</Button>
+                <Button onClick={() => onSave(order)}>Завантажити</Button>
                 <Button onClick={() => onSave(order)}>Оплачено</Button>
                 <Button onClick={() => onSave(order)}>Зберегти</Button>
             </div>

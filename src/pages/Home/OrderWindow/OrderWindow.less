@@ -7,11 +7,11 @@
     flex-direction: column;
 
     .modal-header {
-      padding: 0 20px 0 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid #1D1E20;
+      border-bottom: 2px solid #121212;
+      padding: 0 0 10px;
 
       h1 {
         margin: 0 auto 0 0;
@@ -20,7 +20,7 @@
     }
 
     .modal-footer {
-      border-top: 2px solid #1D1E20;
+      border-top: 2px solid #121212;
       padding: 15px 0 0 0;
       display: flex;
       align-items: center;
@@ -30,7 +30,7 @@
     }
 
     .work-section {
-      padding: 30px;
+      padding: 20px 0;
       overflow: auto;
 
       & > .row {
@@ -67,9 +67,9 @@
 
         .section-header {
           color: #fff;
-          border-bottom: 1px solid #1D1E20;
-          padding: 0 0 20px;
-          margin: 0 0 30px;
+          border-bottom: 1px solid #121212;
+          padding: 0 0 10px;
+          margin: 0 0 20px;
         }
 
         .works-list {
@@ -78,26 +78,21 @@
 
           .row {
             display: flex;
-            border-bottom: 1px solid #1D1E20;
+            border-bottom: 1px solid #121212;
 
             .th {
               flex: 1;
-              border-right: 1px solid #1D1E20;
+              border-right: 1px solid #121212;
 
               &:last-of-type {
                 border: 0;
               }
 
-              div {
-                width: 100%;
-              }
-
-              input, .MuiSelect-select {
-                padding: 5px 10px;
-              }
-
-              fieldset {
-                display: none;
+              input, .ant-select-selector {
+                background: none;
+                outline: none !important;
+                border: 0 !important;
+                box-shadow: none;
               }
             }
 

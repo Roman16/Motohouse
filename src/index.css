@@ -4,7 +4,6 @@ html {
     background-position: center 80px;
     background-size: 90vh 90vh;
     color: #fff;
-    font-size: 16px;
 }
 
 * {
@@ -21,6 +20,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     display: flex;
     background: rgba(53, 54, 59, 0.95);
+    font-size: 16px;
 }
 
 #root {
@@ -31,6 +31,15 @@ body {
 button {
     border: 0;
     background: none;
+    font-size: 16px;
+}
+
+button:not(.icon) {
+    height: 40px;
+}
+
+button:not(.icon) span {
+    font-size: 16px;
 }
 
 button.icon {
@@ -48,6 +57,20 @@ button.icon:hover {
 }
 
 .form-control input,
+.form-control .ant-select-selection-item,
 .form-control .ant-select {
     width: 100%;
+    height: 40px;
+    font-size: 16px;
+}
+
+.ant-select-selector {
+    height: 100% !important;
+    display: flex;
+    align-items: center;
+}
+
+.ant-select-selection-item {
+    display: flex !important;
+    align-items: center !important;
 }
