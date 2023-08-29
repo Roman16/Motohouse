@@ -1,0 +1,127 @@
+.order-modal-window .ant-modal {
+  width: 80vw !important;
+  max-width: 1100px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.order-modal-window .ant-modal .modal-header {
+  padding: 0 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #1D1E20;
+}
+.order-modal-window .ant-modal .modal-header h1 {
+  margin: 0 auto 0 0;
+  color: #fff;
+}
+.order-modal-window .ant-modal .modal-footer {
+  border-top: 2px solid #1D1E20;
+  padding: 15px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: auto 0 0 0;
+  grid-gap: 20px;
+}
+.order-modal-window .ant-modal .work-section {
+  padding: 30px;
+  overflow: auto;
+}
+.order-modal-window .ant-modal .work-section > .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 20px;
+}
+.order-modal-window .ant-modal .work-section > .row > div {
+  flex: 1;
+}
+.order-modal-window .ant-modal .work-section > .row .client-field {
+  min-width: 30%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.order-modal-window .ant-modal .work-section > .row .client-field div {
+  flex: 1;
+  margin: 0 10px 0 0;
+}
+.order-modal-window .ant-modal .work-section > .row .client-field .btn {
+  font-size: 32px;
+}
+.order-modal-window .ant-modal .work-section section {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0 0 0;
+}
+.order-modal-window .ant-modal .work-section section .section-header {
+  color: #fff;
+  border-bottom: 1px solid #1D1E20;
+  padding: 0 0 20px;
+  margin: 0 0 30px;
+}
+.order-modal-window .ant-modal .work-section section .works-list {
+  display: flex;
+  flex-direction: column;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row {
+  display: flex;
+  border-bottom: 1px solid #1D1E20;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .th {
+  flex: 1;
+  border-right: 1px solid #1D1E20;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .th:last-of-type {
+  border: 0;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .th div {
+  width: 100%;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .th input,
+.order-modal-window .ant-modal .work-section section .works-list .row .th .MuiSelect-select {
+  padding: 5px 10px;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .th fieldset {
+  display: none;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .index {
+  min-height: 100%;
+  max-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .price {
+  max-width: 200px;
+}
+.order-modal-window .ant-modal .work-section section .works-list .row .mechanic {
+  max-width: 100px;
+}
+.order-modal-window .ant-modal .work-section section .total-row {
+  height: 50px;
+}
+.order-modal-window .ant-modal .work-section section .total-row .name {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.order-modal-window .ant-modal .work-section section .total-row .name svg {
+  margin: 0 10px 0 0;
+}
+.order-modal-window .ant-modal .work-section section .total-row .price {
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 12px;
+  font-weight: bold;
+  font-size: 18px;
+}
+/*# sourceMappingURL=OrderWindow.css.map */

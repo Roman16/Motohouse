@@ -1,0 +1,23 @@
+.home-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.home-page .table {
+  padding: 30px;
+  opacity: 0.8;
+  flex: 1;
+  overflow: hidden;
+}
+.home-page .table .table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-page .table .table-header h1 {
+  margin: 0;
+}
+.home-page .table .actions .btn {
+  margin: 0 0 0 10px;
+}
+/*# sourceMappingURL=Home.css.map */

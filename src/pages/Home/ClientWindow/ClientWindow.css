@@ -1,0 +1,95 @@
+.client-modal-window {
+  width: 60vw;
+  max-width: 700px;
+  height: 60vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(53, 54, 59, 0.95);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.client-modal-window .modal-header {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1D1E20;
+}
+.client-modal-window .modal-header h1 {
+  margin: 0 auto 0 0;
+  color: #fff;
+}
+.client-modal-window .modal-footer {
+  border-top: 1px solid #1D1E20;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: auto 0 0 0;
+}
+.client-modal-window .work-section {
+  padding: 30px;
+  overflow: auto;
+}
+.client-modal-window .work-section > .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 20px;
+}
+.client-modal-window .work-section > .row > div {
+  flex: 1;
+}
+.client-modal-window .work-section section {
+  margin: 40px 0 0 0;
+}
+.client-modal-window .work-section .section-header {
+  color: #fff;
+  border-bottom: 1px solid #1D1E20;
+  padding: 0 0 10px;
+  margin: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.client-modal-window .work-section .motorcycles-list {
+  display: flex;
+  flex-direction: column;
+}
+.client-modal-window .work-section .motorcycles-list .row {
+  display: flex;
+  border-bottom: 1px solid #1D1E20;
+}
+.client-modal-window .work-section .motorcycles-list .row .th {
+  flex: 1;
+  border-right: 1px solid #1D1E20;
+}
+.client-modal-window .work-section .motorcycles-list .row .th:last-of-type {
+  border: 0;
+}
+.client-modal-window .work-section .motorcycles-list .row .th div {
+  width: 100%;
+}
+.client-modal-window .work-section .motorcycles-list .row .th input {
+  background: none;
+  border: 0;
+  padding: 5px 10px;
+  outline: none !important;
+  color: #fff;
+  font-size: 16px;
+}
+.client-modal-window .work-section .motorcycles-list .row .th fieldset {
+  display: none;
+}
+.client-modal-window .work-section .motorcycles-list .row .index {
+  min-height: 100%;
+  max-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+/*# sourceMappingURL=ClientWindow.css.map */
