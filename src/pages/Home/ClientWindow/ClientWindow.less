@@ -1,0 +1,110 @@
+.client-modal-window {
+  width: 60vw;
+  max-width: 700px;
+  height: 60vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(53, 54, 59, 0.95);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .modal-header {
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #1D1E20;
+
+    h1 {
+      margin: 0 auto 0 0;
+      color: #fff;
+    }
+  }
+
+  .modal-footer {
+    border-top: 1px solid #1D1E20;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: auto 0 0 0;
+  }
+
+  .work-section {
+    padding: 30px;
+    overflow: auto;
+
+    & > .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      grid-gap: 20px;
+
+      & > div {
+        flex: 1;
+      }
+    }
+
+    section {
+      margin: 40px 0 0 0;
+    }
+
+    .section-header {
+      color: #fff;
+      border-bottom: 1px solid #1D1E20;
+      padding: 0 0 10px;
+      margin: 0 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .motorcycles-list {
+      display: flex;
+      flex-direction: column;
+
+      .row {
+        display: flex;
+        border-bottom: 1px solid #1D1E20;
+
+        .th {
+          flex: 1;
+          border-right: 1px solid #1D1E20;
+
+          &:last-of-type {
+            border: 0;
+          }
+
+          div {
+            width: 100%;
+          }
+
+          input {
+            background: none;
+            border: 0;
+            padding: 5px 10px;
+            outline: none !important;
+            color: #fff;
+            font-size: 16px;
+          }
+
+          fieldset {
+            display: none;
+          }
+        }
+
+        .index {
+          min-height: 100%;
+          max-width: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

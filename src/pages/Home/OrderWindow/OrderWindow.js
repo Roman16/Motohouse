@@ -1,19 +1,13 @@
 import React, {useEffect, useState} from "react"
-import Modal from '@mui/material/Modal'
-import CloseIcon from '@mui/icons-material/Close'
-import Autocomplete  from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Button from '@mui/material/Button'
-import AddIcon from '@mui/icons-material/Add'
-import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload'
-
+import './OrderWindow.css'
 import moment from "moment"
-import {managers} from "./Home"
-import PersonAdd from '@mui/icons-material/PersonAdd';
+import {idGenerator, managers} from "../Home"
+import {Modal, Button} from 'antd'
+import {Select, Input} from 'antd'
+import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined"
+import UserAddOutlined from "@ant-design/icons/lib/icons/UserAddOutlined"
+
+const Option = Select.Option
 
 const newOrder = {
     client: {
@@ -48,21 +42,25 @@ const newMaterial = {
 export const OrderWindow = ({
                                 visible,
                                 clients,
+                                selectedOrder,
 
                                 onClose,
-                                onSave
+                                onSave,
+                                onAddUser,
                             }) => {
 
-    const [order, setOrder] = useState({...newOrder, id: new Date().valueOf()})
+    const [order, setOrder] = useState(selectedOrder ? {...selectedOrder} : {...newOrder, id: idGenerator()})
 
     const changeOrderHandler = (data) => {
+        console.log(data)
+
         setOrder(prevState => ({
             ...prevState,
             ...data
         }))
     }
 
-    const addWorkHandler = () => changeOrderHandler({works: [...order.works, {...newWork, id: new Date().valueOf()}]})
+    const addWorkHandler = () => changeOrderHandler({works: [...order.works, {...newWork, id: idGenerator()}]})
 
     const addMaterialHandler = () => changeOrderHandler({
         materials: [...order.materials, {
@@ -81,181 +79,169 @@ export const OrderWindow = ({
     }
 
     useEffect(() => {
-        if (!visible) {
-            setOrder({...newOrder, id: new Date().valueOf()})
+        if (visible) {
+            if (selectedOrder) {
+                setOrder({...selectedOrder})
+            } else {
+                setOrder({...newOrder, id: idGenerator()})
+            }
         }
     }, [visible])
 
     return (
         <Modal
             open={visible}
-            onClose={onClose}
+            onCancel={onClose}
+            footer={false}
+            wrapClassName={'order-modal-window'}
         >
-            <div className="order-modal-window">
-                <div className="modal-header">
-                    <h1>Новий акт</h1>
+            <div className="modal-header">
+                <h1>Новий акт</h1>
+            </div>
 
-                    <button className={'download-btn icon'} onClick={() => alert('Пососи')}>
-                        <SimCardDownloadIcon/>
-                    </button>
+            <div className="work-section">
+                <div className="row">
+                    <div className="form-control client-field">
+                        <Select
+                            placeholder="Клієнт"
+                            value={order.client.id || undefined}
+                            onChange={(id) => changeOrderHandler({client: clients.find((i) => i.id === id)})}
+                        >
+                            {clients.map(client => <Option key={client.id}>
+                                {client.clientName} ({client.clientPhone})
+                            </Option>)}
+                        </Select>
 
-                    <button className={'close-btn icon'} onClick={onClose}>
-                        <CloseIcon/>
-                    </button>
-                </div>
-
-                <div className="work-section">
-                    <div className="row">
-                        <FormControl className={'client-field'}>
-                            <Autocomplete
-                                value={order.client.id || undefined}
-                                id="combo-box-demo"
-                                options={clients}
-                                getOptionLabel={option => `${option.clientName} (${option.clientPhone})`}
-                                renderInput={(params) => <TextField {...params} label="Клієнт"/>}
-
-                                onChange={(event, client) => changeOrderHandler({client})}
-                            />
-
-                            <button className="btn icon add-new-user">
-                                <PersonAdd/>
-                            </button>
-                        </FormControl>
-
-                        <FormControl>
-                            <Autocomplete
-                                disabled={!order.client.clientPhone}
-                                value={order.motorcycle.id || undefined}
-                                disablePortal
-                                id="combo-box-demo"
-                                options={order.client.motorcycles || []}
-                                getOptionLabel={option => `${option.motoModel} (${option.motoNumber})`}
-                                renderInput={(params) => <TextField {...params} label="Мотоцикл"/>}
-
-                                onChange={(event, motorcycle) => changeOrderHandler({motorcycle})}
-                            />
-                        </FormControl>
-
-                        <FormControl>
-                            <TextField
-                                label="Пробіг"
-                                value={order.mileage}
-
-                                onChange={(e) => changeWorksHandler({mileage: e.target.value})}
-                            />
-                        </FormControl>
-
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">Менеджер</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label={'Менеджер'}
-                                value={order.manager}
-                                onChange={(e) => changeOrderHandler({manager: e.target.value})}
-                            >
-                                {managers.map(i => <MenuItem key={i.id} value={i.id}>{i.name}</MenuItem>)}
-                            </Select>
-                        </FormControl>
+                        <button className="btn icon" onClick={onAddUser}>
+                            <UserAddOutlined />
+                        </button>
                     </div>
 
-                    <section className={'works'}>
-                        <h2 className={'section-header'}>Роботи</h2>
+                    <div className="form-control">
+                        <Select
+                            placeholder="Мотоцикл"
+                            disabled={!order.client.id}
+                            value={order.motorcycle?.id || undefined}
+                            onChange={(motorcycle) => changeOrderHandler({motorcycle})}
+                        >
+                            {order.client.motorcycles.map(mot => <Option key={mot.id}>
+                                {mot.motoModel} ({mot.motoNumber})
+                            </Option>)}
+                        </Select>
+                    </div>
 
-                        <div className="works-list">
-                            {order.works.map((work, index) => (<div className="row" key={work.id}>
-                                <div className="th index">{index + 1}</div>
-                                <div className="th name">
-                                    <TextField
-                                        value={work.name}
+                    <div className="form-control">
+                        <Input
+                            placeholder="Пробіг"
+                            value={order.mileage}
 
-                                        onChange={(e) => changeWorksHandler({...work, name: e.target.value})}
-                                    />
-                                </div>
+                            onChange={(e) => changeOrderHandler({mileage: e.target.value})}
+                        />
+                    </div>
 
-                                <div className="th price">
-                                    <TextField
-                                        value={work.price}
-
-                                        onChange={(e) => changeWorksHandler({...work, price: e.target.value})}
-                                    />
-                                </div>
-
-                                <div className="th mechanic">
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={work.mechanic}
-                                        onChange={(e) => changeWorksHandler({...work, mechanic: e.target.value})}
-                                    >
-                                        {managers.map(i => <MenuItem key={i.id} value={i.id}>{i.name}</MenuItem>)}
-                                    </Select>
-                                </div>
-                            </div>))}
-
-                            <div className="row total-row">
-                                <div className="th name" onClick={addWorkHandler}>
-                                    <AddIcon/>
-                                    Додати роботи
-                                </div>
-
-                                <div className="th price">
-                                    {order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0)}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className={'materials'}>
-                        <h2 className={'section-header'}>Матеріали</h2>
-
-                        <div className="works-list">
-                            {order.materials.map((material, index) => (<div className="row">
-                                <div className="th index">{index + 1}</div>
-                                <div className="th name">
-                                    <TextField
-                                        value={material.name}
-
-                                        onChange={(e) => changeMaterialsHandler({...material, name: e.target.value})}
-                                    />
-                                </div>
-
-                                <div className="th price">
-                                    <TextField
-                                        value={material.price}
-
-                                        onChange={(e) => changeMaterialsHandler({...material, price: e.target.value})}
-                                    />
-                                </div>
-
-                                <div className="th mechanic">
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={material.mechanic}
-                                        onChange={(e) => changeWorksHandler({...material, mechanic: e.target.value})}
-                                    >
-                                        {managers.map(i => <MenuItem key={i.id} value={i.id}>{i.name}</MenuItem>)}
-                                    </Select>
-                                </div>
-                            </div>))}
-                            <div className="row total-row">
-                                <div className="th name" onClick={addMaterialHandler}>
-                                    <AddIcon/>
-                                    Додати матеріали
-                                </div>
-
-                                <div className="th price">
-                                    {order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0)}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <div className="form-control">
+                        <Select
+                            placeholder="Менеджер"
+                            value={order.manager}
+                            onChange={(manager) => changeOrderHandler({manager})}
+                        >
+                            {managers.map(client => <Option key={client.id}>
+                                {client.name}
+                            </Option>)}
+                        </Select>
+                    </div>
                 </div>
 
-                <div className="modal-footer">
-                    <Button variant="outlined" onClick={() => onSave(order)}>Зберегти</Button>
-                </div>
+                <section className={'works'}>
+                    <h2 className={'section-header'}>Роботи</h2>
+
+                    <div className="works-list">
+                        {order.works.map((work, index) => (<div className="row" key={work.id}>
+                            <div className="th index">{index + 1}</div>
+                            <div className="th name">
+                                <Input
+                                    value={work.name}
+                                    onChange={(e) => changeWorksHandler({...work, name: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="th price">
+                                <Input
+                                    value={work.price}
+                                    onChange={(e) => changeWorksHandler({...work, price: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="th mechanic">
+                                <Select
+                                    value={work.mechanic}
+                                    onChange={(mechanic) => changeWorksHandler({...work, mechanic})}
+                                >
+                                    {managers.map(i => <Option key={i.id} value={i.id}>{i.name}</Option>)}
+                                </Select>
+                            </div>
+                        </div>))}
+
+                        <div className="row total-row">
+                            <div className="th name" onClick={addWorkHandler}>
+                                <PlusOutlined />
+                                Додати роботи
+                            </div>
+
+                            <div className="th price">
+                                {order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0)}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className={'materials'}>
+                    <h2 className={'section-header'}>Матеріали</h2>
+
+                    <div className="works-list">
+                        {order.materials.map((material, index) => (<div className="row">
+                            <div className="th index">{index + 1}</div>
+                            <div className="th name">
+                                <Input
+                                    value={material.name}
+                                    onChange={(e) => changeMaterialsHandler({...material, name: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="th price">
+                                <Input
+                                    value={material.price}
+                                    onChange={(e) => changeMaterialsHandler({...material, price: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="th mechanic">
+                                <Select
+                                    value={material.mechanic}
+                                    onChange={(mechanic) => changeWorksHandler({...material, mechanic})}
+                                >
+                                    {managers.map(i => <Option key={i.id} value={i.id}>{i.name}</Option>)}
+                                </Select>
+                            </div>
+                        </div>))}
+                        <div className="row total-row">
+                            <div className="th name" onClick={addMaterialHandler}>
+                                <PlusOutlined />
+                                Додати матеріали
+                            </div>
+
+                            <div className="th price">
+                                {order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0)}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div className="modal-footer">
+                <Button onClick={() => onSave(order)}>Друкувати</Button>
+                <Button onClick={() => onSave(order)}>Оплачено</Button>
+                <Button onClick={() => onSave(order)}>Зберегти</Button>
             </div>
         </Modal>
     )

@@ -1,0 +1,153 @@
+.order-modal-window {
+  .ant-modal {
+    width: 80vw !important;
+    max-width: 1100px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+
+    .modal-header {
+      padding: 0 20px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #1D1E20;
+
+      h1 {
+        margin: 0 auto 0 0;
+        color: #fff;
+      }
+    }
+
+    .modal-footer {
+      border-top: 2px solid #1D1E20;
+      padding: 15px 0 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin: auto 0 0 0;
+      grid-gap: 20px;
+    }
+
+    .work-section {
+      padding: 30px;
+      overflow: auto;
+
+      & > .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-gap: 20px;
+
+        & > div {
+          flex: 1;
+        }
+
+        .client-field {
+          min-width: 30%;
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+
+          div {
+            flex: 1;
+            margin: 0 10px 0 0;
+          }
+
+          .btn {
+            font-size: 32px;
+          }
+        }
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        margin: 40px 0 0 0;
+
+        .section-header {
+          color: #fff;
+          border-bottom: 1px solid #1D1E20;
+          padding: 0 0 20px;
+          margin: 0 0 30px;
+        }
+
+        .works-list {
+          display: flex;
+          flex-direction: column;
+
+          .row {
+            display: flex;
+            border-bottom: 1px solid #1D1E20;
+
+            .th {
+              flex: 1;
+              border-right: 1px solid #1D1E20;
+
+              &:last-of-type {
+                border: 0;
+              }
+
+              div {
+                width: 100%;
+              }
+
+              input, .MuiSelect-select {
+                padding: 5px 10px;
+              }
+
+              fieldset {
+                display: none;
+              }
+            }
+
+            .index {
+              min-height: 100%;
+              max-width: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+            }
+
+            .price {
+              max-width: 200px;
+            }
+
+            .mechanic {
+              max-width: 100px;
+            }
+          }
+        }
+
+        .total-row {
+          height: 50px;
+
+          .name {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+
+            svg {
+              margin: 0 10px 0 0;
+            }
+          }
+
+          .price {
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 12px;
+            font-weight: bold;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+}
