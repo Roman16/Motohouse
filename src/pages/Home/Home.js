@@ -11,19 +11,23 @@ import {Status} from "../../components/Status/Status"
 import FileAddOutlined from "@ant-design/icons/lib/icons/FileAddOutlined"
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined"
 import FolderOpenOutlined from "@ant-design/icons/lib/icons/FolderOpenOutlined"
+import {SalaryWindow} from "./SalaryWindow/SalaryWindow"
 
 export const managers = [
     {
         id: '1',
-        name: 'Вовка'
+        name: 'Вовка',
+        salaryPercent: 0.1928
     },
     {
         id: '2',
-        name: 'Сашка'
+        name: 'Сашка',
+        salaryPercent: 0.4088
     },
     {
         id: '3',
-        name: 'Ромка'
+        name: 'Ромка',
+        salaryPercent: 0.3984
     },
 ]
 
@@ -34,6 +38,7 @@ export const Home = () => {
         [clients, setClients] = useState(localStorage.getItem('localClients') ? JSON.parse(localStorage.getItem('localClients')) : []),
         [visibleOrderWindow, setVisibleOrderWindow] = useState(false),
         [visibleClientWindow, setVisibleClientWindow] = useState(false),
+        [visibleSalaryWindow, setVisibleSalaryWindow] = useState(false),
         [selectedOrder, setSelectedOrder] = useState(undefined)
 
     const columns = [
@@ -68,14 +73,19 @@ export const Home = () => {
             render: value => moment(value).format('DD-MM-YYYY')
         },
         {
+            title: 'Дата виїзду',
+            dataIndex: 'exitDate',
+            render: value => value ? moment(value).format('DD-MM-YYYY') : ''
+        },
+        {
             title: 'Менеджер',
             dataIndex: 'manager',
-            render: (value) => managers.find(i => i.id === value).name
+            render: (value) => managers.find(i => i.id === value)?.name || ''
         },
         {
             title: 'Статус',
             dataIndex: 'status',
-            minWidth: 120,
+            width: 130,
             render: (value) => <Status value={value}/>
         },
         {
@@ -88,17 +98,17 @@ export const Home = () => {
             dataIndex: 'actions',
             align: 'right',
             width: 160,
-            render: (i, item) =>
+            render: (i, item, index) =>
                 <div className="actions">
                     <button className="btn icon" onClick={() => {
-                        setSelectedOrder(item)
+                        setSelectedOrder({...item, index})
                         setVisibleOrderWindow(true)
                     }}>
-                        <EyeOutlined />
+                        <EyeOutlined/>
                     </button>
 
                     <button className="btn icon" onClick={() => archiveHandler(item.id)}>
-                        <FolderOpenOutlined />
+                        <FolderOpenOutlined/>
                     </button>
                 </div>
 
@@ -110,9 +120,22 @@ export const Home = () => {
         status: 'archived'
     }) : i)]))
 
+    const payHandler = (id) => {
+        setVisibleOrderWindow(false)
+        setOrders(prevState => ([...prevState.map(i => i.id === id ? ({
+            ...i,
+            status: 'done',
+            exitDate: moment()
+        }) : i)]))
+    }
+
 
     const saveOrderHandler = (order) => {
-        setOrders(prevState => ([order, ...prevState]))
+        if (selectedOrder?.id) {
+            setOrders(prevState => ([...prevState.map(i => i.id === selectedOrder.id ? {...order} : i)]))
+        } else {
+            setOrders(prevState => ([{...order, status: 'progress'}, ...prevState]))
+        }
         setVisibleOrderWindow(false)
     }
 
@@ -132,6 +155,7 @@ export const Home = () => {
     return (<div className="home-page">
         <Header
             onAddUser={() => setVisibleClientWindow(true)}
+            onCalculateSalary={() => setVisibleSalaryWindow(true)}
         />
 
         <div className="table">
@@ -156,6 +180,7 @@ export const Home = () => {
             clients={clients}
 
             onSave={saveOrderHandler}
+            onPay={payHandler}
             onAddUser={() => setVisibleClientWindow(true)}
             onClose={() => {
                 setVisibleOrderWindow(false)
@@ -168,6 +193,13 @@ export const Home = () => {
 
             onSave={saveClientHandler}
             onClose={() => setVisibleClientWindow(false)}
+        />
+
+        <SalaryWindow
+            visible={visibleSalaryWindow}
+            orders={orders}
+
+            onClose={() => setVisibleSalaryWindow(false)}
         />
     </div>)
 }

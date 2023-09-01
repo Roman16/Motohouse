@@ -3,25 +3,6 @@
   max-width: 700px;
   height: 60vh;
 }
-.client-modal-window .modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid #121212;
-  padding: 0 0 10px;
-}
-.client-modal-window .modal-header h1 {
-  margin: 0 auto 0 0;
-  color: #fff;
-}
-.client-modal-window .modal-footer {
-  border-top: 2px solid #121212;
-  padding: 15px 0 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: auto 0 0 0;
-}
 .client-modal-window .work-section {
   padding: 20px 0;
 }

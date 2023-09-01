@@ -3,33 +3,20 @@
     width: 80vw !important;
     max-width: 1100px;
     height: 80vh;
-    display: flex;
-    flex-direction: column;
 
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid #121212;
-      padding: 0 0 10px;
-
-      h1 {
+    .modal-footer {
+      .total-price {
         margin: 0 auto 0 0;
-        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
       }
     }
 
-    .modal-footer {
-      border-top: 2px solid #121212;
-      padding: 15px 0 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin: auto 0 0 0;
-      grid-gap: 20px;
-    }
 
     .work-section {
+      flex: 1;
       padding: 20px 0;
       overflow: auto;
 
@@ -126,6 +113,7 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            padding: 0 10px;
 
             svg {
               margin: 0 10px 0 0;

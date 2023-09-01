@@ -10,7 +10,8 @@ import LogoutOutlined from "@ant-design/icons/lib/icons/LogoutOutlined"
 
 
 export const Header = ({
-                           onAddUser
+                           onAddUser,
+                           onCalculateSalary
                        }) => {
 
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ export const Header = ({
             key: '0',
         },
         {
-            label: <div><DollarOutlined /> Розрахунок</div>,
+            label: <div onClick={onCalculateSalary}><DollarOutlined /> Зарплата</div>,
             key: '1',
         },
         {

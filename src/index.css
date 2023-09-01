@@ -8,14 +8,13 @@ html {
 
 * {
     box-sizing: border-box;
+    color: #fff;
 }
 
 body {
     height: 100vh;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    font-family: 'Arimo-Regular';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     display: flex;
@@ -73,4 +72,38 @@ button.icon:hover {
 .ant-select-selection-item {
     display: flex !important;
     align-items: center !important;
+}
+
+.ant-modal-content {
+    overflow: hidden;
+    height: 100%;
+}
+
+.ant-modal-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #121212;
+    padding: 0 0 10px;
+}
+
+.modal-header h1 {
+    margin: 0 auto 0 0;
+    color: #fff;
+}
+
+.modal-footer {
+    border-top: 2px solid #121212;
+    padding: 15px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: auto 0 0 0;
+    grid-gap: 20px;
 }

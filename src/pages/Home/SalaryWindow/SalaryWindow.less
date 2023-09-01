@@ -1,0 +1,152 @@
+.salary-modal-window {
+  .ant-modal {
+    width: 600px !important;
+  }
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-header {
+    border-bottom: 1px solid #121212;
+    padding: 0 0 10px;
+  }
+
+  .order {
+    display: flex;
+    border-bottom: 1px solid #121212;
+
+    & > div {
+      border-right: 1px solid #121212;
+      padding: 5px 10px;
+    }
+
+    .index {
+      width: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .mot, .client, .total {
+      flex: 1;
+    }
+
+    .total {
+      display: flex;
+      justify-content: flex-end;
+      font-weight: bold;
+      border-right: 1px solid #121212;
+    }
+
+    .price {
+      width: 100px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .managers {
+    display: flex;
+    flex-direction: column;
+
+    .manager {
+      display: flex;
+      flex-direction: column;
+      padding: 0 5px;
+      border-bottom: 1px solid #121212;
+
+      .row {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 16px;
+
+      }
+
+      &:hover {
+        background: rgba(141, 144, 153, 0.3);
+        border-radius: 5px;
+      }
+
+      .name {
+        flex: 1;
+
+      }
+
+      .price {
+        width: 150px;
+        margin: 0 10px 0 0;
+        font-weight: bold;
+        display: flex;
+      }
+
+      .btn {
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+      }
+
+
+      .description {
+        max-height: 150px;
+        padding: 5px 0;
+        display: none;
+        flex-direction: column;
+        overflow: auto;
+      }
+
+      &.open {
+        .description {
+          display: flex;
+        }
+      }
+
+      h4 {
+        font-size: 12px;
+        margin: 0 0 10px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px 0 0;
+      }
+
+
+      .description-list {
+        display: flex;
+        flex-direction: column;
+
+
+        .list-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 3px 10px 3px 0;
+          font-size: 12px;
+          border-bottom: 1px solid #121212;
+
+          .price {
+            margin: 0;
+            width: max-content;
+            font-weight: normal;
+          }
+
+          .mot {
+            margin: 0 10px 0 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100px;
+            white-space: nowrap;
+          }
+
+          .name {
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 0 15px 0 0;
+          }
+        }
+      }
+    }
+  }
+}

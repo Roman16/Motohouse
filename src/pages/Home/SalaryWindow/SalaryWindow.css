@@ -1,0 +1,124 @@
+.salary-modal-window .ant-modal {
+  width: 600px !important;
+}
+.salary-modal-window .orders-list {
+  display: flex;
+  flex-direction: column;
+}
+.salary-modal-window .section-header {
+  border-bottom: 1px solid #121212;
+  padding: 0 0 10px;
+}
+.salary-modal-window .order {
+  display: flex;
+  border-bottom: 1px solid #121212;
+}
+.salary-modal-window .order > div {
+  border-right: 1px solid #121212;
+  padding: 5px 10px;
+}
+.salary-modal-window .order .index {
+  width: 30px;
+  display: flex;
+  align-items: center;
+}
+.salary-modal-window .order .mot,
+.salary-modal-window .order .client,
+.salary-modal-window .order .total {
+  flex: 1;
+}
+.salary-modal-window .order .total {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  border-right: 1px solid #121212;
+}
+.salary-modal-window .order .price {
+  width: 100px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.salary-modal-window .managers {
+  display: flex;
+  flex-direction: column;
+}
+.salary-modal-window .managers .manager {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5px;
+  border-bottom: 1px solid #121212;
+}
+.salary-modal-window .managers .manager .row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+.salary-modal-window .managers .manager:hover {
+  background: rgba(141, 144, 153, 0.3);
+  border-radius: 5px;
+}
+.salary-modal-window .managers .manager .name {
+  flex: 1;
+}
+.salary-modal-window .managers .manager .price {
+  width: 150px;
+  margin: 0 10px 0 0;
+  font-weight: bold;
+  display: flex;
+}
+.salary-modal-window .managers .manager .btn {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
+}
+.salary-modal-window .managers .manager .description {
+  max-height: 150px;
+  padding: 5px 0;
+  display: none;
+  flex-direction: column;
+  overflow: auto;
+}
+.salary-modal-window .managers .manager.open .description {
+  display: flex;
+}
+.salary-modal-window .managers .manager h4 {
+  font-size: 12px;
+  margin: 0 0 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 0;
+}
+.salary-modal-window .managers .manager .description-list {
+  display: flex;
+  flex-direction: column;
+}
+.salary-modal-window .managers .manager .description-list .list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 10px 3px 0;
+  font-size: 12px;
+  border-bottom: 1px solid #121212;
+}
+.salary-modal-window .managers .manager .description-list .list-item .price {
+  margin: 0;
+  width: max-content;
+  font-weight: normal;
+}
+.salary-modal-window .managers .manager .description-list .list-item .mot {
+  margin: 0 10px 0 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100px;
+  white-space: nowrap;
+}
+.salary-modal-window .managers .manager .description-list .list-item .name {
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 15px 0 0;
+}
+/*# sourceMappingURL=SalaryWindow.css.map */
