@@ -3,6 +3,7 @@ import {Header} from "../../components/Header/Header"
 import './Home.css'
 import moment from 'moment'
 import {Table} from 'antd'
+import {collection, addDoc, getDocs} from "firebase/firestore"
 
 import {OrderWindow} from "./OrderWindow/OrderWindow"
 import {ClientWindow} from "./ClientWindow/ClientWindow"
@@ -12,6 +13,7 @@ import FileAddOutlined from "@ant-design/icons/lib/icons/FileAddOutlined"
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined"
 import FolderOpenOutlined from "@ant-design/icons/lib/icons/FolderOpenOutlined"
 import {SalaryWindow} from "./SalaryWindow/SalaryWindow"
+import {db} from "../../firebase-config"
 
 export const managers = [
     {
@@ -129,6 +131,32 @@ export const Home = () => {
         }) : i)]))
     }
 
+    const fetchOrders = async () => {
+        try {
+            const res = await getDocs(collection(db, "klients"))
+            const newData = res.docs.map((doc) => ({...doc.data(), id: doc.id}))
+
+            const docRef = await addDoc(collection(db, "klients"), {
+                clientName: 'test',
+                clientPhone: 'test',
+                motorcycles: [{
+                    motoModel: 'test',
+                    motoNumber: '4234',
+                    motoVin: '3443443',
+                },
+                    {
+                        motoModel: 'test',
+                        motoNumber: '4234',
+                        motoVin: '3443443',
+                    },
+                ]
+            })
+
+            console.log(newData)
+        } catch (e) {
+
+        }
+    }
 
     const saveOrderHandler = (order) => {
         if (selectedOrder?.id) {
@@ -151,6 +179,11 @@ export const Home = () => {
     useEffect(() => {
         localStorage.setItem('localClients', JSON.stringify(clients))
     }, [clients])
+
+
+    useEffect(() => {
+        fetchOrders()
+    }, [])
 
     return (<div className="home-page">
         <Header
