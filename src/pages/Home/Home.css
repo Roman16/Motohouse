@@ -20,4 +20,9 @@
 .home-page .table .actions .btn {
   margin: 0 0 0 10px;
 }
+
+.ant-table-body {
+  overflow-y: scroll;
+  max-height: calc(100vh - 280px);
+}
 /*# sourceMappingURL=Home.css.map */

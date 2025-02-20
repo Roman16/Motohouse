@@ -3,13 +3,13 @@ import {initializeApp} from "firebase/app"
 import {getFirestore} from "@firebase/firestore"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDhAdaEtZf-zACkBTg3XR4ylSJqMCNWpp0",
-    authDomain: "motohouse-b3498.firebaseapp.com",
-    projectId: "motohouse-b3498",
-    storageBucket: "motohouse-b3498.appspot.com",
-    messagingSenderId: "341869378168",
-    appId: "1:341869378168:web:12e383ffecfd20387b4b8d"
-}
+    apiKey: "AIzaSyDLMJMLCl221dzdTxKmjqmN_vmn7N8--wE",
+    authDomain: "motohouse-eda1c.firebaseapp.com",
+    projectId: "motohouse-eda1c",
+    storageBucket: "motohouse-eda1c.firebasestorage.app",
+    messagingSenderId: "542281712016",
+    appId: "1:542281712016:web:1d2d7227f01d1e27653315"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)

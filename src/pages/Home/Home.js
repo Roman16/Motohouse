@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react"
-import {Header} from "../../components/Header/Header"
+import React, { useEffect, useState } from "react"
+import { Header } from "../../components/Header/Header"
 import './Home.css'
 import moment from 'moment'
-import {Table} from 'antd'
-import {collection, addDoc, getDocs} from "firebase/firestore"
+import { Table } from 'antd'
+import { collection, getDocs, orderBy, query } from "firebase/firestore"
 
-import {OrderWindow} from "./OrderWindow/OrderWindow"
-import {ClientWindow} from "./ClientWindow/ClientWindow"
+import { OrderWindow } from "./OrderWindow/OrderWindow"
+import { ClientWindow } from "./ClientWindow/ClientWindow"
 
-import {Status} from "../../components/Status/Status"
+import { Status } from "../../components/Status/Status"
 import FileAddOutlined from "@ant-design/icons/lib/icons/FileAddOutlined"
 import EyeOutlined from "@ant-design/icons/lib/icons/EyeOutlined"
 import FolderOpenOutlined from "@ant-design/icons/lib/icons/FolderOpenOutlined"
-import {SalaryWindow} from "./SalaryWindow/SalaryWindow"
-import {db} from "../../firebase-config"
+import { SalaryWindow } from "./SalaryWindow/SalaryWindow"
+import { db } from "../../firebase-config"
 
 export const managers = [
     {
@@ -36,8 +36,8 @@ export const managers = [
 export const idGenerator = () => String(new Date().valueOf())
 
 export const Home = () => {
-    const [orders, setOrders] = useState(localStorage.getItem('localOrders') ? JSON.parse(localStorage.getItem('localOrders')) : []),
-        [clients, setClients] = useState(localStorage.getItem('localClients') ? JSON.parse(localStorage.getItem('localClients')) : []),
+    const [orders, setOrders] = useState([]),
+        [clients, setClients] = useState([]),
         [visibleOrderWindow, setVisibleOrderWindow] = useState(false),
         [visibleClientWindow, setVisibleClientWindow] = useState(false),
         [visibleSalaryWindow, setVisibleSalaryWindow] = useState(false),
@@ -45,33 +45,35 @@ export const Home = () => {
 
     const columns = [
         {
+            title: '№',
+            dataIndex: 'orderIndex',
+        },
+        {
             title: 'Клієнт',
             dataIndex: 'name',
-            render: (value, item) => <span>{item.client.clientName} <br/> {item.client.clientPhone}</span>
+            render: (value, item) => <span>{item?.clientName} <br /> {item?.clientPhone}</span>
         },
         {
             title: 'Мотоцикл',
-            dataIndex: 'motoModel',
-            render: (value, item) => item.motorcycle.motoModel
+            dataIndex: 'motModel',
         },
         {
             title: 'Номерний знак',
-            dataIndex: 'motoNumber',
-            render: (value, item) => item.motorcycle.motoNumber
+            dataIndex: 'motNumber',
         },
         {
             title: 'VIN',
             dataIndex: 'motoVin',
-            render: (value, item) => item.motorcycle.motoVin
+            render: (value, item) => item.motoVin
         },
         {
             title: 'Пробіг',
             dataIndex: 'mileage',
-            render: (value) => `${value} км`
+            render: (value) => value && `${value} км`
         },
         {
             title: 'Дата заїзду',
-            dataIndex: 'date',
+            dataIndex: 'createDate',
             render: value => moment(value).format('DD-MM-YYYY')
         },
         {
@@ -88,7 +90,7 @@ export const Home = () => {
             title: 'Статус',
             dataIndex: 'status',
             width: 130,
-            render: (value) => <Status value={value}/>
+            render: (value) => <Status value={value} />
         },
         {
             title: 'Сума',
@@ -102,15 +104,15 @@ export const Home = () => {
             width: 160,
             render: (i, item, index) =>
                 <div className="actions">
-                    <button className="btn icon" onClick={() => {
-                        setSelectedOrder({...item, index})
+                    {/* <button className="btn icon" onClick={() => {
+                        setSelectedOrder({ ...item, index })
                         setVisibleOrderWindow(true)
                     }}>
-                        <EyeOutlined/>
-                    </button>
+                        <EyeOutlined />
+                    </button> */}
 
                     <button className="btn icon" onClick={() => archiveHandler(item.id)}>
-                        <FolderOpenOutlined/>
+                        <FolderOpenOutlined />
                     </button>
                 </div>
 
@@ -132,27 +134,17 @@ export const Home = () => {
     }
 
     const fetchOrders = async () => {
+
         try {
-            const res = await getDocs(collection(db, "klients"))
-            const newData = res.docs.map((doc) => ({...doc.data(), id: doc.id}))
+            const q = query(
+                collection(db, 'orders'),
+                orderBy('orderIndex', 'desc')
+            );
+            const res = await getDocs(q);
 
-            const docRef = await addDoc(collection(db, "klients"), {
-                clientName: 'test',
-                clientPhone: 'test',
-                motorcycles: [{
-                    motoModel: 'test',
-                    motoNumber: '4234',
-                    motoVin: '3443443',
-                },
-                    {
-                        motoModel: 'test',
-                        motoNumber: '4234',
-                        motoVin: '3443443',
-                    },
-                ]
-            })
-
+            const newData = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
             console.log(newData)
+            setOrders(newData)
         } catch (e) {
 
         }
@@ -160,9 +152,9 @@ export const Home = () => {
 
     const saveOrderHandler = (order) => {
         if (selectedOrder?.id) {
-            setOrders(prevState => ([...prevState.map(i => i.id === selectedOrder.id ? {...order} : i)]))
+            setOrders(prevState => ([...prevState.map(i => i.id === selectedOrder.id ? { ...order } : i)]))
         } else {
-            setOrders(prevState => ([{...order, status: 'progress'}, ...prevState]))
+            setOrders(prevState => ([{ ...order, status: 'progress' }, ...prevState]))
         }
         setVisibleOrderWindow(false)
     }
@@ -171,14 +163,6 @@ export const Home = () => {
         setClients(prevState => [client, ...prevState])
         setVisibleClientWindow(false)
     }
-
-    useEffect(() => {
-        localStorage.setItem('localOrders', JSON.stringify(orders))
-    }, [orders])
-
-    useEffect(() => {
-        localStorage.setItem('localClients', JSON.stringify(clients))
-    }, [clients])
 
 
     useEffect(() => {
@@ -196,11 +180,20 @@ export const Home = () => {
                 columns={columns}
                 dataSource={orders}
                 pagination={false}
+                scroll={{ y: true }}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onClick: () => {
+                            setSelectedOrder({ ...record, rowIndex })
+                            setVisibleOrderWindow(true)
+                        },
+                    };
+                }}
                 title={() => <div className="table-header">
                     <h1>Акти</h1>
 
                     <button className="btn icon" onClick={() => setVisibleOrderWindow(true)}>
-                        <FileAddOutlined/>
+                        <FileAddOutlined />
                     </button>
                 </div>}
             />

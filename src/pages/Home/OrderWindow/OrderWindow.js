@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, { useEffect, useRef, useState } from "react"
 import './OrderWindow.css'
 import moment from "moment"
-import {idGenerator, managers} from "../Home"
-import {Modal, Button} from 'antd'
-import {Select, Input} from 'antd'
+import { idGenerator, managers } from "../Home"
+import { Modal, Button } from 'antd'
+import { Select, Input } from 'antd'
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined"
 import UserAddOutlined from "@ant-design/icons/lib/icons/UserAddOutlined"
-import {moneyMask, PdfTemplate} from '../PdfTemplate/PdfTemplate'
+import { moneyMask, PdfTemplate } from '../PdfTemplate/PdfTemplate'
 import saveAs from 'file-saver'
-import {pdf} from '@react-pdf/renderer'
+import { pdf } from '@react-pdf/renderer'
 import DownloadOutlined from "@ant-design/icons/lib/icons/DownloadOutlined"
 
 const Option = Select.Option
@@ -26,37 +26,37 @@ const newMaterial = {
 }
 
 export const newOrder = {
-    client: {
-        clientName: undefined,
-        clientPhone: undefined,
-        motorcycles: []
-    },
+    clientName: undefined,
+    clientPhone: undefined,
     motorcycle: {
         motoModel: undefined,
         motoNumber: undefined,
         motoVin: undefined,
     },
+    clientMotorcycles: [],
     createDate: moment(),
     mileage: undefined,
+    motModel: '',
+    motNumber: '',
     manager: '1',
     status: undefined,
-    works: [{...newWork}],
-    materials: [{...newMaterial}]
+    works: [{ ...newWork }],
+    materials: [{ ...newMaterial }]
 }
 
 
 export const OrderWindow = ({
-                                visible,
-                                clients,
-                                selectedOrder,
+    visible,
+    clients,
+    selectedOrder,
 
-                                onClose,
-                                onSave,
-                                onPay,
-                                onAddUser,
-                            }) => {
+    onClose,
+    onSave,
+    onPay,
+    onAddUser,
+}) => {
 
-    const [order, setOrder] = useState(selectedOrder ? {...selectedOrder} : {...newOrder, id: idGenerator()})
+    const [order, setOrder] = useState(selectedOrder ? { ...selectedOrder } : { ...newOrder, id: idGenerator() })
 
     const changeOrderHandler = (data) => {
         setOrder(prevState => ({
@@ -65,7 +65,7 @@ export const OrderWindow = ({
         }))
     }
 
-    const addWorkHandler = () => changeOrderHandler({works: [...order.works, {...newWork, id: idGenerator()}]})
+    const addWorkHandler = () => changeOrderHandler({ works: [...order.works, { ...newWork, id: idGenerator() }] })
 
     const addMaterialHandler = () => changeOrderHandler({
         materials: [...order.materials, {
@@ -75,15 +75,15 @@ export const OrderWindow = ({
     })
 
     const changeWorksHandler = (work) => {
-        changeOrderHandler({works: order.works.map(i => i.id === work.id ? work : i)})
+        changeOrderHandler({ works: order.works.map(i => i.id === work.id ? work : i) })
     }
 
     const changeMaterialsHandler = (material) => {
-        changeOrderHandler({materials: order.materials.map(i => i.id === material.id ? material : i)})
+        changeOrderHandler({ materials: order.materials.map(i => i.id === material.id ? material : i) })
     }
 
     const downloadPdfHandler = async () => {
-        const blob = await pdf((<PdfTemplate order={order} index={selectedOrder?.index || 1}/>)).toBlob()
+        const blob = await pdf((<PdfTemplate order={order} index={selectedOrder?.index || 1} />)).toBlob()
         saveAs(blob, `Наряд-замовлення_${order?.motorcycle?.motoModel || ''}_${order?.motorcycle?.motoNumber || ''}`)
     }
 
@@ -91,9 +91,9 @@ export const OrderWindow = ({
     useEffect(() => {
         if (visible) {
             if (selectedOrder) {
-                setOrder({...selectedOrder})
+                setOrder({ ...selectedOrder })
             } else {
-                setOrder({...newOrder, id: idGenerator()})
+                setOrder({ ...newOrder, id: idGenerator() })
             }
         }
     }, [visible])
@@ -116,16 +116,16 @@ export const OrderWindow = ({
                         <div className="form-control client-field">
                             <Select
                                 placeholder="Клієнт"
-                                value={order.client.id || undefined}
-                                onChange={(id) => changeOrderHandler({client: clients.find((i) => i.id === id)})}
+                                value={order.clientId || undefined}
+                                onChange={(id) => changeOrderHandler({ client: clients.find((i) => i.clientId === id) })}
                             >
-                                {clients.map(client => <Option key={client.id}>
+                                {clients.map(client => <Option key={client.clientId}>
                                     {client.clientName} ({client.clientPhone})
                                 </Option>)}
                             </Select>
 
                             <button className="btn icon" onClick={onAddUser}>
-                                <UserAddOutlined/>
+                                <UserAddOutlined />
                             </button>
                         </div>
 
@@ -133,11 +133,11 @@ export const OrderWindow = ({
                         <div className="form-control">
                             <Select
                                 placeholder="Мотоцикл"
-                                disabled={!order.client.id}
+                                disabled={!order.clientId}
                                 value={order.motorcycle?.id || undefined}
-                                onChange={(id) => changeOrderHandler({motorcycle: order.client.motorcycles.find((i) => i.id === id)})}
+                                onChange={(id) => changeOrderHandler({ motorcycle: order.clientMotorcycles.find((i) => i.id === id) })}
                             >
-                                {order.client.motorcycles.map(mot => <Option key={mot.id}>
+                                {order.clientMotorcycles.map(mot => <Option key={mot.id}>
                                     {mot.motoModel} ({mot.motoNumber})
                                 </Option>)}
                             </Select>
@@ -148,7 +148,7 @@ export const OrderWindow = ({
                                 placeholder="Пробіг"
                                 value={order.mileage}
 
-                                onChange={(e) => changeOrderHandler({mileage: e.target.value})}
+                                onChange={(e) => changeOrderHandler({ mileage: e.target.value })}
                             />
                         </div>
 
@@ -156,7 +156,7 @@ export const OrderWindow = ({
                             <Select
                                 placeholder="Менеджер"
                                 value={order.manager}
-                                onChange={(manager) => changeOrderHandler({manager})}
+                                onChange={(manager) => changeOrderHandler({ manager })}
                             >
                                 {managers.map(client => <Option key={client.id}>
                                     {client.name}
@@ -174,21 +174,21 @@ export const OrderWindow = ({
                                 <div className="th name form-control">
                                     <Input
                                         value={work.name}
-                                        onChange={(e) => changeWorksHandler({...work, name: e.target.value})}
+                                        onChange={(e) => changeWorksHandler({ ...work, name: e.target.value })}
                                     />
                                 </div>
 
                                 <div className="th price form-control">
                                     <Input
                                         value={work.price}
-                                        onChange={(e) => changeWorksHandler({...work, price: e.target.value})}
+                                        onChange={(e) => changeWorksHandler({ ...work, price: e.target.value })}
                                     />
                                 </div>
 
                                 <div className="th mechanic form-control">
                                     <Select
                                         value={work.mechanic}
-                                        onChange={(mechanic) => changeWorksHandler({...work, mechanic})}
+                                        onChange={(mechanic) => changeWorksHandler({ ...work, mechanic })}
                                     >
                                         {managers.map(i => <Option key={i.id} value={i.id}>{i.name}</Option>)}
                                     </Select>
@@ -197,7 +197,7 @@ export const OrderWindow = ({
 
                             <div className="row total-row">
                                 <div className="th name" onClick={addWorkHandler}>
-                                    <PlusOutlined/>
+                                    <PlusOutlined />
                                     Додати роботи
                                 </div>
 
@@ -217,21 +217,21 @@ export const OrderWindow = ({
                                 <div className="th name form-control">
                                     <Input
                                         value={material.name}
-                                        onChange={(e) => changeMaterialsHandler({...material, name: e.target.value})}
+                                        onChange={(e) => changeMaterialsHandler({ ...material, name: e.target.value })}
                                     />
                                 </div>
 
                                 <div className="th price form-control">
                                     <Input
                                         value={material.price}
-                                        onChange={(e) => changeMaterialsHandler({...material, price: e.target.value})}
+                                        onChange={(e) => changeMaterialsHandler({ ...material, price: e.target.value })}
                                     />
                                 </div>
 
                                 <div className="th mechanic form-control">
                                     <Select
                                         value={material.mechanic}
-                                        onChange={(mechanic) => changeWorksHandler({...material, mechanic})}
+                                        onChange={(mechanic) => changeWorksHandler({ ...material, mechanic })}
                                     >
                                         {managers.map(i => <Option key={i.id} value={i.id}>{i.name}</Option>)}
                                     </Select>
@@ -239,7 +239,7 @@ export const OrderWindow = ({
                             </div>))}
                             <div className="row total-row">
                                 <div className="th name" onClick={addMaterialHandler}>
-                                    <PlusOutlined/>
+                                    <PlusOutlined />
                                     Додати матеріали
                                 </div>
 
@@ -258,7 +258,7 @@ export const OrderWindow = ({
                     </div>
 
 
-                    <Button onClick={downloadPdfHandler}><DownloadOutlined/></Button>
+                    <Button onClick={downloadPdfHandler}><DownloadOutlined /></Button>
                     {order.status === 'progress' && <Button onClick={() => onPay(order.id)}>Оплачено</Button>}
                     {order.status !== 'archived' && <Button onClick={() => onSave(order)}>Зберегти</Button>}
 
