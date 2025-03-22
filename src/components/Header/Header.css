@@ -18,6 +18,7 @@ header.header .logo img {
 }
 header.header .menu {
   cursor: pointer;
+  margin: 0 0 0 auto;
 }
 .ant-dropdown li svg {
   margin: 0 5px 0 0;

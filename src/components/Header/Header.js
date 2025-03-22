@@ -10,7 +10,6 @@ import LogoutOutlined from "@ant-design/icons/lib/icons/LogoutOutlined"
 
 
 export const Header = ({
-                           onAddUser,
                            onCalculateSalary
                        }) => {
 
@@ -22,27 +21,19 @@ export const Header = ({
 
     const items = [
         {
-            label: <div onClick={onAddUser}><UserAddOutlined /> Додати клієнта</div>,
-            key: '0',
-        },
-        {
             label: <div onClick={onCalculateSalary}><DollarOutlined /> Зарплата</div>,
             key: '1',
         },
         {
             type: 'divider',
         },
-        {
-            label: <div onClick={logoutHandler}><LogoutOutlined /> Вийти</div>,
-            key: '3',
-        },
+        // {
+        //     label: <div onClick={logoutHandler}><LogoutOutlined /> Вийти</div>,
+        //     key: '3',
+        // },
     ]
 
     return (<header className={'header'}>
-        <div className="logo">
-            <img src={logo} alt=""/>
-        </div>
-
         <div className="menu">
             <Dropdown
                 menu={{items}}

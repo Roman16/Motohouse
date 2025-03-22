@@ -1,13 +1,16 @@
 .home-page {
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .home-page .table {
-  padding: 30px;
+  width: 100%;
+  max-width: 100%;
   opacity: 0.8;
-  flex: 1;
   overflow: hidden;
+  padding: 20px;
+  flex: 1;
 }
 .home-page .table .table-header {
   display: flex;
@@ -20,9 +23,7 @@
 .home-page .table .actions .btn {
   margin: 0 0 0 10px;
 }
-
-.ant-table-body {
-  overflow-y: scroll;
-  max-height: calc(100vh - 280px);
+.home-page .table .ant-table-tbody tr {
+  cursor: pointer;
 }
 /*# sourceMappingURL=Home.css.map */

@@ -1,13 +1,16 @@
 .home-page {
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .table {
-    padding: 30px;
-    opacity: .8;
-    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    opacity: 0.8;
     overflow: hidden;
+    padding: 20px;
+    flex: 1;
 
     .table-header {
       display: flex;
@@ -22,6 +25,12 @@
     .actions {
       .btn {
         margin: 0 0 0 10px;
+      }
+    }
+
+    .ant-table-tbody {
+      tr {
+        cursor: pointer;
       }
     }
   }

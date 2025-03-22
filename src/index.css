@@ -1,8 +1,5 @@
 html {
-    background: url("./images/logo.svg") no-repeat;
     background-color: #35363B;
-    background-position: center 80px;
-    background-size: 90vh 90vh;
     color: #fff;
 }
 

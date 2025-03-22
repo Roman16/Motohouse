@@ -1,0 +1,24 @@
+.new-user-popover {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+.new-user-popover input,
+.new-user-popover button {
+  height: 32px;
+  font-size: 14px;
+}
+.new-user-popover input span,
+.new-user-popover button span {
+  font-size: 14px;
+}
+.client-field .ant-select-selection-search input {
+  height: 100%;
+}
+.client-field .anticon-user-add svg {
+  width: 20px;
+  height: 20px;
+}
+/*# sourceMappingURL=ClientField.css.map */

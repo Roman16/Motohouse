@@ -47,13 +47,13 @@ export const SalaryWindow = ({
                             {index + 1}
                         </div>
                         <div className="mot">
-                            {order.motorcycle.motoModel} <br/>
-                            {order.motorcycle.motoNumber}
+                            {order.motModel} <br/>
+                            {order.motNumber}
                         </div>
 
                         <div className="client">
-                            {order.client.clientName} <br/>
-                            {order.client.clientPhone}
+                            {order.client.name} <br/>
+                            {order.client.phone}
                         </div>
 
                         <div className="price">
@@ -103,7 +103,7 @@ export const SalaryWindow = ({
                                 {paidOrders.map(order => <div className={'description-list'}>
                                     {order.works.filter(i => i.mechanic === manager.id)
                                         .map(work => <div className="list-item">
-                                            <div className="mot" title={order.motorcycle.motoModel}>{order.motorcycle.motoModel}</div>
+                                            <div className="mot" title={order.motModel}>{order.motModel}</div>
                                             <div className="name" title={work.name}>{work.name}</div>
                                             <div className="price">{work.price}</div>
                                         </div>)}
@@ -119,7 +119,7 @@ export const SalaryWindow = ({
                                 {paidOrders.map(order => <div className={'description-list'}>
                                     {order.materials.filter(i => i.mechanic === manager.id)
                                         .map(work => <div className="list-item">
-                                            <div className="mot" title={order.motorcycle.motoModel}>{order.motorcycle.motoModel}</div>
+                                            <div className="mot" title={order.motModel}>{order.motModel}</div>
                                             <div className="name" title={work.name}>{work.name}</div>
                                             <div className="price">{work.price}</div>
                                         </div>)}

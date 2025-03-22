@@ -135,11 +135,11 @@ export const PdfTemplate = ({order, index}) => {
 
                 <View style={styles.row}>
                     <View>
-                        <Text style={styles.title}>MOTO HOUSE</Text>
+                        <Text style={styles.title}>CRASITSKOGO</Text>
 
                         <View style={styles.contact}>
                             <Text>Телефон: +38 (093) 545-45-02</Text>
-                            <Text>Instagram: @moto.house.kiev</Text>
+                            {/* <Text>Instagram: @moto.house.kiev</Text> */}
                         </View>
 
                         <View style={styles.workTime}>
@@ -149,26 +149,25 @@ export const PdfTemplate = ({order, index}) => {
                         </View>
                     </View>
 
-                    <View>
+                    {/* <View>
                         <Image style={styles.img} src={logo}/>
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={{textAlign: 'center'}}>
                     <Text style={{...styles.orderName, textDecoration: 'underline'}}>
-                        Наряд-замовлення № {345 + index}
+                        Наряд-замовлення № {order.orderIndex}
                     </Text>
                 </View>
 
                 <View style={styles.detailsRow}>
                     <View style={styles.detailsCol}>
                         <Text style={styles.orderDetails}>
-                            <Text style={styles.boldText}>Клієнт:</Text>
-                            {order.client.clientName} {order.client.clientPhone}
+                            <Text style={styles.boldText}>Клієнт:</Text> {order.client.name} {order.client.phone}
                         </Text>
 
                         <Text style={styles.orderDetails}>
-                            <Text style={styles.boldText}>Транспортний засіб:</Text> {order.motorcycle.motoModel}
+                            <Text style={styles.boldText}>Транспортний засіб:</Text> {order.motModel}
                         </Text>
 
                         <Text style={styles.orderDetails}>
@@ -179,11 +178,11 @@ export const PdfTemplate = ({order, index}) => {
 
                     <View style={styles.detailsCol}>
                         <Text style={styles.orderDetails}>
-                            <Text style={styles.boldText}>Держ. No:</Text> {order.motorcycle.motoNumber}
+                            <Text style={styles.boldText}>Держ. №:</Text> {order.motNumber}
                         </Text>
 
                         <Text style={styles.orderDetails}>
-                            <Text style={styles.boldText}>VIN код:</Text> {order.motorcycle.motoVin}
+                            <Text style={styles.boldText}>VIN код:</Text> {order.motVin}
                         </Text>
                     </View>
                 </View>
