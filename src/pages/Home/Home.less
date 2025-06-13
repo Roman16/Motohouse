@@ -1,11 +1,12 @@
 .home-page {
-  width: 100vw;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
   .table {
     width: 100%;
+    max-height: calc(100% - 100px);
     max-width: 100%;
     opacity: 0.8;
     overflow: hidden;
@@ -20,6 +21,11 @@
       h1 {
         margin: 0;
       }
+
+      .ant-input-search {
+        max-width: 300px;
+        margin: 0 auto 0 20px;
+      }
     }
 
     .actions {
@@ -29,9 +35,14 @@
     }
 
     .ant-table-tbody {
+      overflow: auto;
+
       tr {
         cursor: pointer;
       }
+    }
+
+    table {
     }
   }
 }

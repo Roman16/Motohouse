@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../../components/Header/Header";
 import "./Home.css";
 import moment from "moment";
-import { Table } from "antd";
+import { Table, Input } from "antd";
 import {
   collection,
   getDocs,
@@ -23,6 +23,8 @@ import FolderOpenOutlined from "@ant-design/icons/lib/icons/FolderOpenOutlined";
 import { SalaryWindow } from "./SalaryWindow/SalaryWindow";
 import { db } from "../../firebase-config";
 
+const { Search } = Input;
+
 export const managers = [
   {
     id: "1",
@@ -36,12 +38,14 @@ export const managers = [
   },
 ];
 
-export const Home = () => {
+const Home = () => {
   const [orders, setOrders] = useState([]),
     [clients, setClients] = useState([]),
     [visibleOrderWindow, setVisibleOrderWindow] = useState(false),
     [visibleSalaryWindow, setVisibleSalaryWindow] = useState(false),
-    [selectedOrder, setSelectedOrder] = useState(undefined);
+    [selectedOrder, setSelectedOrder] = useState(undefined),
+    [searchStr, setSearchStr] = useState(""),
+    [fetchLoading, setFetchLoading] = useState(false);
 
   const columns = [
     {
@@ -54,7 +58,7 @@ export const Home = () => {
       dataIndex: "name",
       render: (value, item) => (
         <span>
-          {item?.client.name} <br /> {item?.client.phone}
+          {item?.client?.name} <br /> {item?.client?.phone}
         </span>
       ),
     },
@@ -65,6 +69,7 @@ export const Home = () => {
     {
       title: "Номерний знак",
       dataIndex: "motNumber",
+      width: "150px",
     },
     {
       title: "VIN",
@@ -78,23 +83,24 @@ export const Home = () => {
     {
       title: "Дата заїзду",
       dataIndex: "createDate",
-      render: (value) => moment(value.toDate()).format("DD-MM-YYYY"),
+      width: "120px",
     },
     {
       title: "Дата виїзду",
       dataIndex: "exitDate",
-      render: (value) => value && moment(value.toDate()).format("DD-MM-YYYY"),
+      width: "120px",
     },
     {
       title: "Менеджер",
       dataIndex: "manager",
       render: (value) => managers.find((i) => i.id === value)?.name || "",
+      width: "120px",
     },
     {
       title: "Статус",
       dataIndex: "status",
-      width: 130,
       render: (value) => <Status value={value} />,
+      width: "120px",
     },
     {
       title: "Сума",
@@ -151,11 +157,12 @@ export const Home = () => {
     saveOrderHandler({
       ...selectedOrder,
       status: "done",
-      exitDate: moment().toDate(),
+      exitDate: moment().format("DD-MM-YYYY"),
     });
   };
 
   const fetchOrders = async () => {
+    setFetchLoading(true);
     try {
       const q = query(collection(db, "orders"), orderBy("orderIndex", "desc"));
       const res = await getDocs(q);
@@ -163,6 +170,8 @@ export const Home = () => {
       setOrders(newData);
     } catch (e) {
       console.log(e);
+    } finally {
+      setFetchLoading(false);
     }
   };
 
@@ -230,6 +239,8 @@ export const Home = () => {
     }
   };
 
+  const onSearch = (value) => setSearchStr(value);
+
   useEffect(() => {
     fetchOrders();
     fetchClients();
@@ -241,14 +252,21 @@ export const Home = () => {
 
       <div className="table">
         <Table
+          loading={fetchLoading}
           columns={columns}
-          dataSource={orders}
+          dataSource={orders.filter(
+            (i) =>
+              (i.client?.name !== null &&
+                i.client?.name.toLowerCase().includes(searchStr)) ||
+              (i.client?.phone !== null &&
+                i.client?.phone.toLowerCase().includes(searchStr))
+          )}
           pagination={false}
-          scroll={{ y: true }}
+          scroll={{ y: "calc(100vh - 250px)" }}
           onRow={(record, rowIndex) => {
             return {
               onClick: () => {
-                setSelectedOrder({ ...record, rowIndex });
+                setSelectedOrder({ ...record });
                 setVisibleOrderWindow(true);
               },
             };
@@ -256,6 +274,8 @@ export const Home = () => {
           title={() => (
             <div className="table-header">
               <h1>Акти</h1>
+
+              <Search onSearch={onSearch} placeholder="Пошук" />
 
               <button
                 className="btn icon"
@@ -289,3 +309,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default React.memo(Home);

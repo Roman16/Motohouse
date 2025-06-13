@@ -14,7 +14,7 @@ export const SalaryWindow = ({
                                  onClose
                              }) => {
     const [openDescription, setOpenDescription] = useState()
-
+    console.log(orders)
     const paidOrders = orders.filter(i => i.status === 'done')
 
     const getManagerSalary = (id) => {
@@ -52,12 +52,12 @@ export const SalaryWindow = ({
                         </div>
 
                         <div className="client">
-                            {order.client.name} <br/>
-                            {order.client.phone}
+                            {order.client?.name} <br/>
+                            {order.client?.phone}
                         </div>
 
                         <div className="price">
-                            {moneyMask(order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) + order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0))}
+                            {moneyMask(order.materials ? order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) : 0 + order.works ? order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) : 0)}
                         </div>
                     </div>)}
 
@@ -68,7 +68,7 @@ export const SalaryWindow = ({
 
                         <div className="price">
                             {moneyMask(paidOrders.reduce((sum, order) => {
-                                return sum + order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) + order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0)
+                                return sum + order.materials ? order.materials.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) : 0 + order.works ? order.works.reduce((sum, currentValue) => sum + +(currentValue.price || 0), 0) : 0
                             }, 0))}
                         </div>
                     </div>
@@ -83,7 +83,7 @@ export const SalaryWindow = ({
                         return (<div className={`manager ${openDescription === manager.id ? 'open' : ''}`}>
                             <div className="row"
                                  onClick={() => setOpenDescription(prevState => prevState === manager.id ? undefined : manager.id)}>
-                                <div className="name">{manager.name}</div>
+                                <div className="name">{manager?.name}</div>
 
                                 <div className="manager-salary">
                                     {getManagerSalary(manager.id)}
@@ -104,7 +104,7 @@ export const SalaryWindow = ({
                                     {order.works.filter(i => i.mechanic === manager.id)
                                         .map(work => <div className="list-item">
                                             <div className="mot" title={order.motModel}>{order.motModel}</div>
-                                            <div className="name" title={work.name}>{work.name}</div>
+                                            <div className="name" title={work?.name}>{work?.name}</div>
                                             <div className="price">{work.price}</div>
                                         </div>)}
                                 </div>)}
@@ -120,7 +120,7 @@ export const SalaryWindow = ({
                                     {order.materials.filter(i => i.mechanic === manager.id)
                                         .map(work => <div className="list-item">
                                             <div className="mot" title={order.motModel}>{order.motModel}</div>
-                                            <div className="name" title={work.name}>{work.name}</div>
+                                            <div className="name" title={work?.name}>{work?.name}</div>
                                             <div className="price">{work.price}</div>
                                         </div>)}
                                 </div>)}

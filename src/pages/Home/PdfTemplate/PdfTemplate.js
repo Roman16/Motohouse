@@ -130,7 +130,7 @@ export const PdfTemplate = ({order, index}) => {
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.date}>
-                    <Text>{moment(order.createDate).format('DD.MM.YYYY hh:mm')}</Text>
+                    <Text>{order.createDate}</Text>
                 </View>
 
                 <View style={styles.row}>

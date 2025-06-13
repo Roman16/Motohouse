@@ -10,6 +10,7 @@ import saveAs from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import DownloadOutlined from "@ant-design/icons/lib/icons/DownloadOutlined";
 import { ClientField } from "../ClientField/ClientField";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const Option = Select.Option;
 
@@ -26,11 +27,10 @@ const newMaterial = {
 
 export const newOrder = {
   client: {
-    id: undefined,
     name: undefined,
     phone: undefined,
   },
-  createDate: moment().toDate(),
+  createDate: moment().format("DD-MM-YYYY"),
   mileage: "",
   motModel: "",
   motNumber: "",
@@ -92,10 +92,20 @@ export const OrderWindow = ({
     ).toBlob();
     saveAs(
       blob,
-      `Наряд-замовлення_${order?.motModel || ""}_${
-        order?.motNumber || ""
-      }`
+      `Наряд-замовлення_${order?.motModel || ""}_${order?.motNumber || ""}`
     );
+  };
+
+  const removeWorkHandler = (index) => {
+    changeOrderHandler({
+      works: order.works.filter((item, i) => i !== index),
+    });
+  };
+
+  const removeMaterialHandler = (index) => {
+    changeOrderHandler({
+      materials: order.materials.filter((item, i) => i !== index),
+    });
   };
 
   useEffect(() => {
@@ -226,6 +236,13 @@ export const OrderWindow = ({
                       ))}
                     </Select>
                   </div>
+
+                  <div className="th actions">
+                    <Button
+                      onClick={() => removeWorkHandler(index)}
+                      icon={<DeleteOutlined />}
+                    />
+                  </div>
                 </div>
               ))}
 
@@ -297,6 +314,13 @@ export const OrderWindow = ({
                         </Option>
                       ))}
                     </Select>
+                  </div>
+
+                  <div className="th actions">
+                    <Button
+                      onClick={() => removeMaterialHandler(index)}
+                      icon={<DeleteOutlined />}
+                    />
                   </div>
                 </div>
               ))}

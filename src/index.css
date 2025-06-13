@@ -9,6 +9,7 @@ html {
 }
 
 body {
+    width: 100vw;
     height: 100vh;
     margin: 0;
     font-family: 'Arimo-Regular';
@@ -17,6 +18,7 @@ body {
     display: flex;
     background: rgba(53, 54, 59, 0.95);
     font-size: 16px;
+    overflow: hidden;
 }
 
 #root {
